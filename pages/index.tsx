@@ -7,6 +7,7 @@ import Sidebar from "@/components/Sidebar";
 import { CategoryProvider } from "@/providers/CategoryProvider";
 import getUserLocation from "@/utils/getUserLocation";
 import UserLocationProvider from "@/providers/UserLocationProvider";
+import Map from "@/components/Map";
 
 export default function Home() {
   useEffect(() => {
@@ -29,7 +30,9 @@ export default function Home() {
             </CategoryProvider>
           </UserLocationProvider>
         </div>
-        <div>Google Map</div>
+        <div>
+          <Map />
+        </div>
       </div>
     </main>
   );
