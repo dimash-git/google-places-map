@@ -6,10 +6,10 @@ const Sidebar = () => {
   const menuItems: Menu[] = menuData;
   return (
     <div
-      className="p-2 w-[100px] h-screen
-        items-center flex flex-col space-y-3
+      className="p-2 w-full md:w-[100px] md:h-screen
+        items-center flex md:flex-col md:space-y-3
         shadow-md shadow-purple-400 bg-white
-        sticky top-0 z-20"
+        sticky top-0 z-20 max-md:fixed max-md:hidden"
     >
       <Image src="/logo.png" alt="Logo" width={50} height={50} />
       {menuItems.map((item, idx) => (

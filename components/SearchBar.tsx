@@ -1,8 +1,23 @@
-import React from "react";
+import { BusinessContext } from "@/context/BusinessContext";
+import { LocationContext } from "@/context/LocationContext";
+import axios from "axios";
+import React, { useContext } from "react";
 
 const SearchBar = () => {
-  const onChange = (e: any) => {
-    console.log(e.target.value);
+  const { location } = useContext(LocationContext);
+  const { setBusinessList } = useContext(BusinessContext);
+  const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    console.log(e.currentTarget.value);
+  };
+  const onEnter = async (e: React.KeyboardEvent<HTMLInputElement>) => {
+    if (e.key === "Enter") {
+      const value = e.currentTarget.value;
+      const url = `/api/google/search?text=${value}&lat=${location.lat}&lng=${location.lng}`;
+      const response = await axios.get(url);
+      const { data } = response;
+      setBusinessList(data.candidates);
+      console.log(data);
+    }
   };
   return (
     <div className="flex items-center gap-3 bg-purple-100 p-3 rounded-xl">
@@ -25,6 +40,7 @@ const SearchBar = () => {
         placeholder="Search"
         className="outline-none bg-transparent w-full text-lg placeholder:purple-400"
         onChange={onChange}
+        onKeyDown={onEnter}
       />
     </div>
   );

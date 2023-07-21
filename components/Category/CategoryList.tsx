@@ -12,7 +12,7 @@ const CategoryList = () => {
       <h2 className="text-xl mt-3 mb-3 font-bold">Select Your Fav Category</h2>
       <div>
         {categoryItems && (
-          <div className="mb-5 flex gap-6">
+          <div className="mb-5 flex gap-3 md:gap-6 flex-wrap">
             {categoryItems.map((item, idx) => (
               <CategoryItem category={item} key={idx} />
             ))}

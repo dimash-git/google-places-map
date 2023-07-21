@@ -10,13 +10,16 @@ interface Menu {
 }
 
 interface Business {
-  photos?: any;
+  photos: any;
   name: string;
   vicinity: string;
   rating: number;
+  geometry: {
+    location: Coords;
+  };
 }
 
 interface Coords {
-  latitude: string;
-  longitude: string;
+  lat: number;
+  lng: number;
 }

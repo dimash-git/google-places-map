@@ -1,15 +1,21 @@
 import React from "react";
 
 interface Props {
-  count: number;
-  perPage: number;
-  setCount: React.Dispatch<React.SetStateAction<number>>;
-  places: any[];
+  businessCount: number;
+  setBusinessCount: React.Dispatch<React.SetStateAction<number>>;
+  bussinessesPerPage: number;
+  businessList: Business[];
 }
 
-const BusinessControl = ({ count, setCount, perPage, places }: Props) => {
-  const isPrevActive = count > 0;
-  const isNextActive = count + perPage < places?.length;
+const NavControl = ({
+  businessCount,
+  setBusinessCount,
+  bussinessesPerPage,
+  businessList,
+}: Props) => {
+  const isPrevActive = businessCount > 0;
+  const isNextActive =
+    businessCount + bussinessesPerPage < businessList?.length;
   return (
     <>
       <button
@@ -20,7 +26,7 @@ const BusinessControl = ({ count, setCount, perPage, places }: Props) => {
                   ? "cursor-pointer hover:text-purple-500 hover:bg-purple-100"
                   : "opacity-25"
               }`}
-        onClick={() => setCount((count) => count - perPage)}
+        onClick={() => setBusinessCount((count) => count - bussinessesPerPage)}
         disabled={isPrevActive ? false : true}
       >
         <svg
@@ -47,7 +53,7 @@ const BusinessControl = ({ count, setCount, perPage, places }: Props) => {
                   ? "cursor-pointer hover:text-purple-500 hover:bg-purple-100"
                   : "opacity-25"
               }`}
-        onClick={() => setCount((count) => count + perPage)}
+        onClick={() => setBusinessCount((count) => count + bussinessesPerPage)}
         disabled={isNextActive ? false : true}
       >
         <svg
@@ -69,4 +75,4 @@ const BusinessControl = ({ count, setCount, perPage, places }: Props) => {
   );
 };
 
-export default BusinessControl;
+export default NavControl;

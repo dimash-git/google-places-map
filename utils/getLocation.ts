@@ -1,12 +1,12 @@
-const getUserLocation = (): Promise<Coords> => {
+const getLocation = (): Promise<Coords> => {
   return new Promise((resolve, reject) => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
           resolve({
-            latitude: latitude.toString(),
-            longitude: longitude.toString(),
+            lat: latitude,
+            lng: longitude,
           });
         },
         (error) => {
@@ -19,4 +19,4 @@ const getUserLocation = (): Promise<Coords> => {
   });
 };
 
-export default getUserLocation;
+export default getLocation;

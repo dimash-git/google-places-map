@@ -1,21 +1,31 @@
 "use client";
+import { BusinessContext } from "@/context/BusinessContext";
 import Image from "next/image";
-import React, { useState } from "react";
+import React, { useContext } from "react";
 
 interface Props {
   business: Business;
+  className?: String;
 }
 
-const BusinessItem = ({ business }: Props) => {
+const BusinessItem = ({ business, className }: Props) => {
   const photoRef = business?.photos?.[0]?.photo_reference;
   const imageUrl = photoRef
     ? `https://maps.googleapis.com/maps/api/place/photo?maxwidth=700&photo_reference=${photoRef}&key=${process.env.NEXT_PUBLIC_GOOGLE_MAP_API_KEY}`
     : null;
 
+  const { setBusinessSelected } = useContext(BusinessContext);
+
+  const handleClick = () => {
+    setBusinessSelected(business);
+  };
+
   return (
     <div
-      className="flex gap-3 p-3 mb-4 items-center
-        border-b-[1px] border-purple-200"
+      onClick={handleClick}
+      className={`cursor-pointer flex gap-3 py-3 md:px-3 mb-4 items-center border-b-[1px] border-purple-200 hover:bg-purple-50 hover:scale-105 transition rounded-md ${
+        className || null
+      }`}
     >
       <div className="h-[100px] w-[100px] flex flex-shrink-0 items-center justify-center">
         <Image

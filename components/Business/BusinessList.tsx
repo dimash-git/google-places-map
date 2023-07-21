@@ -1,33 +1,68 @@
-import React, { useContext, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import BusinessItem from "./BusinessItem";
-import BusinessControl from "./NavControl";
+import NavControl from "./NavControl";
 import ShimmerItem from "./ShimmerItem";
 
 import useNearbyPlaces from "@/hooks/useNearbyPlaces";
-import { CategoryContext } from "@/providers/CategoryProvider";
+import { CategoryContext } from "@/context/CategoryContext";
+import { BusinessContext } from "@/context/BusinessContext";
 
 const BusinessList = () => {
-  const { selected } = useContext(CategoryContext);
+  const { categorySelected } = useContext(CategoryContext);
+  const {
+    businessList,
+    setBusinessList,
+    businessCount,
+    setBusinessCount,
+    bussinessesPerPage,
+    setBussinessesPerPage,
+    businessSelected,
+  } = useContext(BusinessContext);
 
-  const { data, isLoading } = useNearbyPlaces(selected);
-  const places: any[] = data?.results;
+  const { data, isLoading } = useNearbyPlaces(categorySelected);
 
-  const [count, setCount] = useState<number>(0);
-  const perPage = 4;
+  useEffect(() => {
+    if (data) setBusinessList(data.results);
+  }, [data, setBusinessList]);
+
+  useEffect(() => {
+    setBussinessesPerPage(4);
+  }, [setBussinessesPerPage]);
 
   return (
     <div>
       <h2 className="text-xl font-bold my-3 flex items-center justify-between min-h-[40px]">
         Top Nearby Places
         <span className="flex">
-          <BusinessControl {...{ count, setCount, perPage, places }} />
+          <NavControl
+            {...{
+              businessCount,
+              setBusinessCount,
+              bussinessesPerPage,
+              businessList,
+            }}
+          />
         </span>
       </h2>
       <div>
-        {!isLoading && places
-          ? places.map((item, idx) => {
-              if (idx >= count && idx < count + perPage) {
-                return <BusinessItem key={idx} business={item} />;
+        {!isLoading && businessList
+          ? businessList.map((item, idx) => {
+              if (
+                idx >= businessCount &&
+                idx < businessCount + bussinessesPerPage
+              ) {
+                return (
+                  <BusinessItem
+                    className={`${
+                      businessSelected.vicinity === item.vicinity &&
+                      businessSelected.name === item.name
+                        ? "border-[1px] bg-purple-50 "
+                        : null
+                    }`}
+                    key={idx}
+                    business={item}
+                  />
+                );
               }
             })
           : Array.from({ length: 4 }, (_, idx) => <ShimmerItem key={idx} />)}

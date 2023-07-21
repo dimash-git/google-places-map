@@ -1,4 +1,4 @@
-import { CategoryContext } from "@/providers/CategoryProvider";
+import { CategoryContext } from "@/context/CategoryContext";
 import Image from "next/image";
 import React, { useContext } from "react";
 
@@ -7,9 +7,9 @@ interface Props {
 }
 
 const CategoryItem = ({ category }: Props) => {
-  const { setSelected } = useContext(CategoryContext);
+  const { setCategorySelected } = useContext(CategoryContext);
   const handleClick = (value: string) => {
-    setSelected(value);
+    setCategorySelected(value);
   };
   return (
     <div
